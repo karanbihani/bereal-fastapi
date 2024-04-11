@@ -30,8 +30,8 @@ class PostBase(BaseModel):
     # image_url_front: str
     # image_url_back: str
 
-class PostCreate(PostBase):
-    pass    
+# class PostCreate(PostBase):
+#     pass    
     
 class PostUpdate(BaseModel):
 

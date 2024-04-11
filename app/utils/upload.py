@@ -9,7 +9,7 @@ async def save_upload_file(upload_file: UploadFile, destination_path: str, type:
         
         # add current user id later
         filename = type + "_" + post_datetime + file_extension
-        file_path = os.path.join(destination_path, upload_file.filename)
+        file_path = os.path.join(destination_path, filename)
 
         if os.path.exists(file_path):
             raise HTTPException(status_code=400, detail="File already exists")
@@ -20,5 +20,6 @@ async def save_upload_file(upload_file: UploadFile, destination_path: str, type:
             await buffer.write(content)
 
         return file_path
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Could not save file: {str(e)}")
