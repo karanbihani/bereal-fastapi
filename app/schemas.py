@@ -14,11 +14,11 @@ class ORMBase(BaseModel):
 
 class UserOut(ORMBase):
     
+    id: int
+    fullname: str
     username:str
-    id: str
     email: EmailStr
     created_at: datetime
-
 
 # Posts
 
@@ -68,7 +68,6 @@ class UserCreate(BaseModel):
 class UserUpdate(BaseModel):
 
     fullname: Optional[str]
-    description: Optional[str]
     email: Optional[EmailStr]
     username: Optional[str]
     bio: Optional[str]
