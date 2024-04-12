@@ -35,10 +35,10 @@ class PostBase(BaseModel):
     
 class PostUpdate(BaseModel):
 
-    description: Optional[str]
-    published: Optional[bool]
-    location: Optional[str]
-    deleted: Optional[bool] 
+    description: Optional[str] = None 
+    published: Optional[bool] = True
+    location: Optional[str] = None
+    deleted: Optional[bool] = False
 
 class Post(PostBase):
     id: int
@@ -63,6 +63,7 @@ class UserCreate(BaseModel):
     username: str
     email: EmailStr
     password: str
+    bio: Optional[str]
 
 class UserUpdate(BaseModel):
 
@@ -70,4 +71,4 @@ class UserUpdate(BaseModel):
     description: Optional[str]
     email: Optional[EmailStr]
     username: Optional[str]
-
+    bio: Optional[str]

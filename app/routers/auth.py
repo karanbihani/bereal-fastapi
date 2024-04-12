@@ -4,6 +4,10 @@ from sqlalchemy.orm import Session
 
 router = APIRouter(tags=['Authentication'])
 
+from app import schemas
+from app.db import database, models
+from app.utils import auth
+from app.auth import oauth2
 
 # @router.post('/login', response_model=schemas.Token)
 # def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
@@ -15,7 +19,7 @@ router = APIRouter(tags=['Authentication'])
 #         raise HTTPException(
 #             status_code=status.HTTP_403_FORBIDDEN, detail=f"Invalid Credentials")
 
-#     if not utils.verify(user_credentials.password, user.password):
+#     if not auth.verify(user_credentials.password, user.password):
 #         raise HTTPException(
 #             status_code=status.HTTP_403_FORBIDDEN, detail=f"Invalid Credentials")
 
