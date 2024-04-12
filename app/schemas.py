@@ -45,8 +45,8 @@ class Post(PostBase):
     image_url_front: str
     image_url_back: str
     created_at: datetime
-    # owner_id : int
-    # owner: UserOut
+    owner_id : int
+    owner: UserOut
 
     class Config:
         """ Configuring ORM mode to true"""
@@ -71,3 +71,10 @@ class UserUpdate(BaseModel):
     email: Optional[EmailStr]
     username: Optional[str]
     bio: Optional[str]
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    id: Optional[int] = None

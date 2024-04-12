@@ -18,10 +18,10 @@ class Post(Base):
                         nullable=False, server_default=text('now()'))
     deleted = Column(Boolean, server_default="FALSE", nullable = False )
     deleted_at = Column(TIMESTAMP(timezone=True))
-    # owner_id = Column(Integer, ForeignKey(
-    #     "users.id", ondelete="CASCADE"), nullable=False)
+    owner_id = Column(Integer, ForeignKey(
+        "users.id", ondelete="CASCADE"), nullable=False)
 
-    # owner = relationship("User")
+    owner = relationship("User")
 
 class User(Base):
     __tablename__ = "users"
