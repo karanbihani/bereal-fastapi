@@ -7,8 +7,9 @@ import time
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
+from app.config import settings
 
-SQLALCHEMY_DATABASE_URL = f'postgresql://postgres:postgres@localhost:5432/bereal-fastapi' # driver is automatically psycopg2
+SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}' # driver is automatically psycopg2
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 

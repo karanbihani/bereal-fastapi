@@ -51,7 +51,7 @@ async def create_post( post: forms.PostCreate = Depends(forms.PostCreate), front
         post['image_url_front'] = front_image_url
         post['image_url_back'] = back_image_url
 
-        new_post = models.Post(**post)
+        new_post = models.Post(owner_id= current_user.id ,**post)
 
         db.add(new_post)
         db.commit()
@@ -69,9 +69,9 @@ def delete_post(id: int, db: Session = Depends(get_db), current_user: int = Depe
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"post with id: {id} does not exist")
 
-    # if post.owner_id != current_user.id:
-    #     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
-    #                         detail="Not authorized to perform requested action")
+    if post.owner_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="Not authorized to perform requested action")
 
     post_query.delete(synchronize_session=False)
     db.commit()
@@ -89,9 +89,9 @@ def update_post(id: int, updated_post: schemas.PostUpdate, db: Session = Depends
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"post with id: {id} does not exist")
 
-    # if post.owner_id != current_user.id:
-    #     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
-    #                         detail="Not authorized to perform requested action")
+    if post.owner_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="Not authorized to perform requested action")
 
     post_query.update(updated_post.dict(), synchronize_session=False)
 

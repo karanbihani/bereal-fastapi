@@ -11,7 +11,6 @@ class ORMBase(BaseModel):
         """ Configuring ORM mode to true"""
         orm_mode = True
 
-
 class UserOut(ORMBase):
     
     id: int
