@@ -77,3 +77,8 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[int] = None
+
+class Reaction(BaseModel):
+    post_id: int
+    dir: int
+    # dir: conint(le=6)

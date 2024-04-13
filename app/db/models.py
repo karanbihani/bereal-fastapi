@@ -33,3 +33,9 @@ class User(Base):
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
     bio = Column(String,nullable=True)
+
+class Reaction(Base):
+    __tablename__ = "reactions"
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"),primary_key=True)
+    post_id = Column(Integer, ForeignKey("posts.id", ondelete="CASCADE"),primary_key=True)
+    reaction_type = Column(Integer, nullable=False) # 1 is thumbs up, 2 is smile ect ect (for each user ew can also store their specific reaction in a anohter table to display their image but not implemeting that right now)
