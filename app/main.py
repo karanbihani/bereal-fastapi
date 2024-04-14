@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from .db import models
 
 from .db.database import engine
-from .routers import post, user, auth
+from .routers import post, user, auth, reaction, comment, friend
 
 load_dotenv()
 
@@ -31,6 +31,8 @@ app.add_middleware(
 app.include_router(post.router)
 app.include_router(user.router)
 app.include_router(auth.router)
+app.include_router(reaction.router)
+app.include_router(comment.router)
 
 @app.get("/")
 def root():

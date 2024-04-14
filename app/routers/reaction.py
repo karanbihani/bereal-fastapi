@@ -21,6 +21,11 @@ router = APIRouter(
 @router.post("/", status_code = status.HTTP_201_CREATED )
 def reaction(reaction: schemas.Reaction ,db:  Session = Depends(get_db), current_user : int =  Depends(oauth2.get_current_user)):
     
+    post = db.query(models.Post).filter(models.Post.id==reaction.post_id).first()
+
+    if not post:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail = f"Post with id {reaction.post_id} does not exist")
+
     reaction_query = db.query(models.Reaction).filter(models.Reaction.post_id == reaction.post_id, models.Reaction.user_id == current_user.id)
 
     reaction_found = reaction_query.first()

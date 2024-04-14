@@ -82,3 +82,12 @@ class Reaction(BaseModel):
     post_id: int
     dir: int
     # dir: conint(le=6)
+
+class Comment(BaseModel):
+    comment: str
+
+class CommentOut(BaseModel):
+    post_id: int
+    comment: str
+    user_id: int
+    id: int

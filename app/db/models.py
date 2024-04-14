@@ -39,3 +39,20 @@ class Reaction(Base):
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"),primary_key=True)
     post_id = Column(Integer, ForeignKey("posts.id", ondelete="CASCADE"),primary_key=True)
     reaction_type = Column(Integer, nullable=False) # 1 is thumbs up, 2 is smile ect ect (for each user ew can also store their specific reaction in a anohter table to display their image but not implemeting that right now)
+
+class Comments(Base):
+    __tablename__ = "comments"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"),nullable=False)
+    post_id = Column(Integer, ForeignKey("posts.id", ondelete="CASCADE"),nullable=False)
+    comment = Column(String, nullable=False)
+
+class FriendRequest(Base):
+    __tablename__ = "friendrequests"
+    user_from_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"),primary_key=True)
+    user_to_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"),primary_key=True)
+
+class Friend(Base):
+    __tablename__ = "friends"
+    user_1_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"),primary_key=True)
+    user_2_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"),primary_key=True)
