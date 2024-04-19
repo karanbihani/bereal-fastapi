@@ -12,7 +12,8 @@ load_dotenv()
 
 POSTGRES_PWD = os.getenv('POSTGRES_PWD')
 
-models.Base.metadata.create_all(bind=engine)
+# Commented out below line as alembic will handle this, technicallly don't need to but want alembic to handle all this
+# models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
