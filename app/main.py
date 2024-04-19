@@ -33,6 +33,7 @@ app.include_router(user.router)
 app.include_router(auth.router)
 app.include_router(reaction.router)
 app.include_router(comment.router)
+app.include_router(friend.router)
 
 @app.get("/")
 def root():

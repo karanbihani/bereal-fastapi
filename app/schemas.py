@@ -19,6 +19,10 @@ class UserOut(ORMBase):
     email: EmailStr
     created_at: datetime
 
+    class Config:
+        
+        from_attributes = True
+        orm_mode = True
 # Posts
 
 class PostBase(BaseModel):
@@ -45,14 +49,14 @@ class Post(PostBase):
     image_url_back: str
     created_at: datetime
     owner_id : int
-    owner: UserOut
+    owner: UserOut    
 
     class Config:
         """ Configuring ORM mode to true"""
         orm_mode = True
 
-class PostOut(ORMBase):
-    post: Post
+class PostOut(Post):
+    reaction_type: Optional[int]
 
 # User
 

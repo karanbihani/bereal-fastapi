@@ -17,10 +17,51 @@ router = APIRouter(
     tags=['Posts']
 )
 
+# @router.get("/")
 @router.get("/", response_model=List[schemas.PostOut])
 def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
-    posts = db.query(models.Post).all()
-    return [{"post": post} for post in posts]
+    # posts = db.query(models.Post).all()
+
+    # results = db.query(models.Post,models.Reaction.reaction_type ).join(models.Reaction, models.Reaction.post_id == models.Post.id, isouter=True)
+    
+    # print(results)
+    # print(results.all())
+    # print(posts)
+    # # return [{"post": result} for result in results]
+    # return results.all()
+
+    results = db.query(
+        models.Post,
+        models.Reaction.reaction_type.label("reaction_type")
+    ).join(
+        models.Reaction, models.Reaction.post_id == models.Post.id, isouter=True
+    ).group_by(
+        models.Post.id
+    ).all()
+       
+    posts_out = []
+    for post, reaction in results:
+        print(post, reaction, "\n")
+        
+        # serialize the owner_data else it returns sql alchemy object 
+        owner_data = schemas.UserOut.from_orm(post.owner) if post.owner else None
+
+        post_data = {
+            "id": post.id,
+            "description": post.description,
+            "published": post.published,
+            "location": post.location,
+            "deleted": post.deleted,
+            "image_url_front": post.image_url_front,
+            "image_url_back": post.image_url_back,
+            "created_at": post.created_at,
+            "owner_id": post.owner_id,
+            "owner": owner_data,
+            "reaction_type": reaction if reaction is not None else 0  # Default value or handle None differently
+        }
+        posts_out.append(schemas.PostOut(**post_data))
+    
+    return posts_out
 
 @router.get("/{id}", response_model= schemas.PostOut)
 def get_post_by(id:int, db: Session = Depends(get_db),current_user: int = Depends(oauth2.get_current_user)):
